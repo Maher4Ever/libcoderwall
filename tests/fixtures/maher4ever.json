@@ -1,0 +1,21 @@
+{
+   "username":"maher4ever",
+   "name":"Maher Sallam",
+   "location":"Netherlands",
+   "endorsements":0,
+   "accounts":{
+      "github":"Maher4Ever"
+   },
+   "badges":[
+      {
+         "name":"Charity",
+         "description":"Fork and commit to someone's open source project in need",
+         "badge":"http://cdn.coderwall.com/assets/badges/charity-bf61e713137d910534ff805f389bcffb.png"
+      },
+      {
+         "name":"Mongoose",
+         "description":"Have at least one original repo where Ruby is the dominant language",
+         "badge":"http://cdn.coderwall.com/assets/badges/mongoose-58cc728c2fc9af62e48c81a03029b23d.png"
+      }
+   ]
+}
