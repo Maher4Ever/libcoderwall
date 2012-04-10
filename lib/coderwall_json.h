@@ -16,7 +16,8 @@ extern "C" {
 
 #include <coderwall/coderwall.h>
 
-bool coderwall_get_user_info_from_json(const char *json, CoderwallUserData *results_buffer);
+bool
+coderwall_get_user_info_from_json(const char *json, CoderwallUserData *results_buffer);
 
 #ifdef __cplusplus
 }

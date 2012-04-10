@@ -48,9 +48,9 @@ coderwall_get_url_of_username(const char *username)
   const char *api_url = "http://coderwall.com/";
   const char *data_ext = ".json";
 
-  size_t api_url_length = strlen(api_url);
-  size_t data_ext_length = strlen(data_ext);
-  size_t username_length = strlen(username);
+  unsigned int api_url_length = strlen(api_url);
+  unsigned int data_ext_length = strlen(data_ext);
+  unsigned int username_length = strlen(username);
 
   char *url = coderwall_malloc(api_url_length + username_length + data_ext_length + 1, "user url"); /* 1 for the '\0' */
 

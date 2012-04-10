@@ -56,7 +56,8 @@ do {                                                                  \
 #define CODERWALL_EXTRACT_NUMBER_FROM_JSON(key_, target_var_, where_, top_node_, tmp_node_, path_var_) \
   CODERWALL_EXTRACT_NUMBER_FROM_JSON_FOR_MEMBER(key_, key_, target_var_, where_, top_node_, tmp_node_, path_var_)
 
-bool coderwall_get_user_info_from_json(const char *json, CoderwallUserData *user)
+bool
+coderwall_get_user_info_from_json(const char *json, CoderwallUserData *user)
 {
   yajl_val top_node = yajl_tree_parse(json, NULL, 0);
 

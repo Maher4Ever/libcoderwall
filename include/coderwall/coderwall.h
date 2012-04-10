@@ -60,28 +60,32 @@ typedef struct {
  *
  * @return pointer to the new badge
  */
-CoderwallBadge* coderwall_new_badge(void);
+CoderwallBadge*
+coderwall_new_badge(void);
 
 /*!
  * Frees memory already allocated for a badge.
  *
  * @param badge pointer to a badge
  */
-void coderwall_free_badge(CoderwallBadge *badge);
+void
+coderwall_free_badge(CoderwallBadge *badge);
 
 /*!
  * Allocates memory for a new user-data struct and all its members.
  *
  * @return pointer to thr new user-data struct
  */
-CoderwallUserData* coderwall_new_user_data(void);
+CoderwallUserData*
+coderwall_new_user_data(void);
 
 /*!
  * Frees memory already allocated for a user-data struct.
  *
  * @param results_buffer pointer to a user-data struct
  */
-void coderwall_free_user_data(CoderwallUserData *results_buffer);
+void
+coderwall_free_user_data(CoderwallUserData *results_buffer);
 
 /*!
  * Fetches data about a given user and return the result.
@@ -91,7 +95,8 @@ void coderwall_free_user_data(CoderwallUserData *results_buffer);
  *
  * @return the status of the request for data.
  */
-CoderwallResult coderwall_fetch_user_data(const char *username, CoderwallUserData *results_buffer);
+CoderwallResult
+coderwall_fetch_user_data(const char *username, CoderwallUserData *results_buffer);
 
 #ifdef __cplusplus
 }

@@ -21,17 +21,26 @@ typedef struct {
   size_t length;
 } CoderwallFetchedData;
 
-CURL* coderwall_new_fetcher(void);
-void  coderwall_free_fetcher(CURL *fetcher);
+CURL*
+coderwall_new_fetcher(void);
 
-CoderwallFetchedData* coderwall_new_fetched_data(void);
-void                  coderwall_free_fetched_data(CoderwallFetchedData *result);
+void
+coderwall_free_fetcher(CURL *fetcher);
 
-size_t coderwall_accumulate_fetched_data(void *data, size_t size, size_t nmemb, CoderwallFetchedData *result);
+CoderwallFetchedData*
+coderwall_new_fetched_data(void);
 
-CURLcode coderwall_fetch_url(const char *url, CoderwallFetchedData *result);
+void
+coderwall_free_fetched_data(CoderwallFetchedData *result);
 
-char*  coderwall_get_url_of_username(const char *username);
+size_t
+coderwall_accumulate_fetched_data(void *data, size_t size, size_t nmemb, CoderwallFetchedData *result);
+
+CURLcode
+coderwall_fetch_url(const char *url, CoderwallFetchedData *result);
+
+char*
+coderwall_get_url_of_username(const char *username);
 
 #ifdef __cplusplus
 }

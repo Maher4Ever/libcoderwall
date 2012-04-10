@@ -18,7 +18,8 @@
 #include "coderwall_http.h"
 #include "coderwall_json.h"
 
-CoderwallBadge* coderwall_new_badge(void)
+CoderwallBadge*
+coderwall_new_badge(void)
 {
   CoderwallBadge *badge;
   badge = coderwall_malloc(sizeof *badge, "a new badge");
@@ -30,7 +31,8 @@ CoderwallBadge* coderwall_new_badge(void)
   return badge;
 }
 
-void coderwall_free_badge(CoderwallBadge *badge)
+void
+coderwall_free_badge(CoderwallBadge *badge)
 {
   free(badge->name);
   free(badge->description);
@@ -38,7 +40,8 @@ void coderwall_free_badge(CoderwallBadge *badge)
   free(badge);
 }
 
-CoderwallUserData* coderwall_new_user_data(void)
+CoderwallUserData*
+coderwall_new_user_data(void)
 {
   CoderwallUserData *user;
   user = coderwall_malloc(sizeof *user, "a new user-data struct");
@@ -54,7 +57,8 @@ CoderwallUserData* coderwall_new_user_data(void)
   return user;
 }
 
-void coderwall_free_user_data(CoderwallUserData *user)
+void
+coderwall_free_user_data(CoderwallUserData *user)
 {
   int i;
 
@@ -71,7 +75,8 @@ void coderwall_free_user_data(CoderwallUserData *user)
   free(user);
 }
 
-CoderwallResult coderwall_fetch_user_data(const char *username, CoderwallUserData *result)
+CoderwallResult
+coderwall_fetch_user_data(const char *username, CoderwallUserData *result)
 {
   char *url = coderwall_get_url_of_username(username);
   CoderwallFetchedData *buffer = coderwall_new_fetched_data();
