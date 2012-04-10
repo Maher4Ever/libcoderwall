@@ -13,6 +13,7 @@
 #include <curl/curl.h>
 
 #include "coderwall_utils.h"
+#include "coderwall_memory.h"
 #include "coderwall_http.h"
 
 CURL *coderwall_new_fetcher()
@@ -48,9 +49,7 @@ char* coderwall_get_url_of_username(const char *username)
   unsigned int data_ext_length = strlen(data_ext);
   unsigned int username_length = strlen(username);
 
-  char *url = malloc(api_url_length + username_length + data_ext_length + 1); /* 1 for the '\0' */
-
-  if ( url == NULL ) coderwall_error("Couldn't allocate memory for the url of the username.");
+  char *url = coderwall_malloc(api_url_length + username_length + data_ext_length + 1, "user url"); /* 1 for the '\0' */
 
   memcpy(url,  api_url, api_url_length);
   memcpy(url + api_url_length,  username, username_length);
@@ -61,15 +60,12 @@ char* coderwall_get_url_of_username(const char *username)
 
 CoderwallFetchedData *coderwall_new_fetched_data(void)
 {
-  CoderwallFetchedData *result = malloc(sizeof(CoderwallFetchedData));
+  CoderwallFetchedData *result;
+  result = coderwall_malloc(sizeof *result, "results");
 
-  if (result == NULL) coderwall_error("Couldn't allocate memory for the results.");
+  result->data = coderwall_malloc(sizeof *result->data, "results buffer");
 
   result->length = 0;
-  result->data = malloc(result->length + 1);
-
-  if (result->data == NULL) coderwall_error("Couldn't allocate memory for the results.");
-
   result->data[0] = '\0';
 
   return result;
@@ -77,7 +73,6 @@ CoderwallFetchedData *coderwall_new_fetched_data(void)
 
 void coderwall_free_fetched_data(CoderwallFetchedData *result)
 {
-  result->length = 0;
   free(result->data);
   free(result);
 }
@@ -89,9 +84,7 @@ size_t coderwall_accumulate_fetched_data(void *data, size_t size, size_t nmemb, 
   size_t data_size = size * nmemb; /* Data size is NOT null terminated */
   size_t new_length = result->length + data_size;
 
-  result->data = realloc(result->data, new_length + 1);
-
-  if (result->data == NULL) coderwall_error("Couldn't allocate new memory for the results.");
+  result->data = coderwall_realloc(result->data, new_length + 1, "results data");
 
   memcpy(result->data + result->length, data, data_size);
 

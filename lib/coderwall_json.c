@@ -15,6 +15,7 @@
 #include <coderwall/coderwall.h>
 
 #include "coderwall_utils.h"
+#include "coderwall_memory.h"
 #include "coderwall_json.h"
 
 #define CODERWALL_EXTRACT_STRING_FROM_JSON_FOR_MEMBER(key_, member_, target_var_, where_, top_node_, tmp_node_, path_var_) \
@@ -28,11 +29,9 @@ do {                                                                       \
   }                                                                        \
                                                                            \
   size_t str_len = strlen(YAJL_GET_STRING( tmp_node_ ));                   \
-  target_var_->member_ = realloc(target_var_->member_, str_len + 1);       \
-                                                                           \
-  if ( target_var_->member_ == NULL ) {                                    \
-    coderwall_error("Couldn't allocate memory when parsing response.");    \
-  }                                                                        \
+  target_var_->member_ = coderwall_realloc (                               \
+      target_var_->member_, str_len + 1, "user's " TO_STRING(member_)      \
+  );                                                                       \
                                                                            \
   memcpy(target_var_->member_, YAJL_GET_STRING( tmp_node_ ), str_len + 1); \
 } while(false);
@@ -75,9 +74,9 @@ bool coderwall_get_user_info_from_json(const char *json, CoderwallUserData *user
   node = yajl_tree_get(top_node, path, yajl_t_array);
 
   user->badges_count = (unsigned int)YAJL_GET_ARRAY(node)->len;
-  user->badges = realloc(user->badges, sizeof(CoderwallBadge*) * user->badges_count);
-
-  if ( user->badges == NULL ) coderwall_error("Couldn't allocate memory when parsing response.");
+  user->badges = coderwall_realloc(
+      user->badges, user->badges_count * sizeof(*user->badges), "user's badges"
+  );
 
   int i = 0;
   yajl_val badge_node;

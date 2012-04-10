@@ -14,23 +14,18 @@
 
 #include <coderwall/coderwall.h>
 #include "coderwall_utils.h"
+#include "coderwall_memory.h"
 #include "coderwall_http.h"
 #include "coderwall_json.h"
 
 CoderwallBadge* coderwall_new_badge(void)
 {
-  CoderwallBadge *badge = malloc(sizeof(CoderwallBadge));
+  CoderwallBadge *badge;
+  badge = coderwall_malloc(sizeof *badge, "a new badge");
 
-  if ( badge == NULL ) coderwall_error("Couldn't create a new badge.");
-
-  badge->name = malloc(sizeof(char *));
-  badge->description = malloc(sizeof(char *));
-  badge->image_url = malloc(sizeof(char *));
-
-  if ( badge->name == NULL || badge->description == NULL || badge->image_url == NULL )
-  {
-    coderwall_error("Couldn't allocate memory for badge's data.");
-  }
+  badge->name = coderwall_malloc(sizeof *badge->name, "badge name");
+  badge->description = coderwall_malloc(sizeof *badge->description, "badge description");
+  badge->image_url = coderwall_malloc(sizeof *badge->image_url, "badge image-url");
 
   return badge;
 }
@@ -45,21 +40,16 @@ void coderwall_free_badge(CoderwallBadge *badge)
 
 CoderwallUserData* coderwall_new_user_data(void)
 {
-  CoderwallUserData *user = malloc(sizeof(CoderwallUserData));
+  CoderwallUserData *user;
+  user = coderwall_malloc(sizeof *user, "a new user-data struct");
 
-  if ( user == NULL ) coderwall_error("Couldn't create a new user data.");
-
-  user->name = malloc(sizeof(char *));
-  user->username = malloc(sizeof(char *));
-  user->location = malloc(sizeof(char *));
+  user->name = coderwall_malloc(sizeof *user->name, "user's name");
+  user->username = coderwall_malloc(sizeof *user->username, "user's username");
+  user->location = coderwall_malloc(sizeof *user->location, "user's location");
+  user->endorsements = 0;
 
   user->badges_count = 0;
-  user->badges = malloc(sizeof(CoderwallBadge*));
-
-  if ( user->name == NULL || user->username == NULL || user->location == NULL || user->badges == NULL )
-  {
-    coderwall_error("Couldn't allocate memory for user's data.");
-  }
+  user->badges = coderwall_malloc(sizeof *user->badges, "user's badges");
 
   return user;
 }
