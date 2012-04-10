@@ -18,7 +18,7 @@
 static void
 print_error_and_exit(char *format, va_list format_args)
 {
-  fprintf(stderr, "Memory error: ");
+  fprintf(stderr, "Memory error: couldn't allocate memory for ");
   vfprintf(stderr, format, format_args);
   fprintf(stderr, ".\n");
 
