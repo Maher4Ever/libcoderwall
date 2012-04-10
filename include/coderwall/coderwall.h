@@ -45,15 +45,44 @@ typedef struct {
   char *image_url;
 } CoderwallBadge;
 
+/*! Represents a registerd account for a user on coderwall. */
+typedef struct {
+  char *username;
+  char *type;
+} CoderwallUserAccount;
+
 /*! Represents the info about a coderwall user. */
 typedef struct {
   char* username;
   char *name;
   char *location;
   unsigned int endorsements;
-  CoderwallBadge **badges; /*! Array of badges with size "badges_count" */
+
+  /*! Array of accounts with size "accounts_count" */
+  CoderwallUserAccount **accounts;
+  size_t accounts_count;
+
+  /*! Array of badges with size "badges_count" */
+  CoderwallBadge **badges;
   size_t badges_count;
+
 } CoderwallUserData;
+
+/*!
+ * Allocates memory for a new user account struct and all its members.
+ *
+ * @return pointer to the new user account struct
+ */
+CoderwallUserAccount*
+coderwall_new_user_account(void);
+
+/*!
+ * Frees memory already allocated for a user account struct.
+ *
+ * @param account pointer to a user account struct
+ */
+void
+coderwall_free_user_account(CoderwallUserAccount *account);
 
 /*!
  * Allocates memory for a new badge and all its members.

@@ -18,6 +18,26 @@
 #include "coderwall_http.h"
 #include "coderwall_json.h"
 
+CoderwallUserAccount*
+coderwall_new_user_account(void)
+{
+  CoderwallUserAccount *account;
+  account = coderwall_malloc(sizeof *account, "a new user-account");
+
+  account->username = coderwall_malloc(sizeof *account->username, "an account's username");
+  account->type = coderwall_malloc(sizeof *account->type, "an account's type");
+
+  return account;
+}
+
+void
+coderwall_free_user_account(CoderwallUserAccount *account)
+{
+  free(account->username);
+  free(account->type);
+  free(account);
+}
+
 CoderwallBadge*
 coderwall_new_badge(void)
 {
@@ -51,6 +71,9 @@ coderwall_new_user_data(void)
   user->location = coderwall_malloc(sizeof *user->location, "user's location");
   user->endorsements = 0;
 
+  user->accounts_count = 0;
+  user->accounts = coderwall_malloc(sizeof *user->accounts, "user's accounts");
+
   user->badges_count = 0;
   user->badges = coderwall_malloc(sizeof *user->badges, "user's badges");
 
@@ -65,6 +88,11 @@ coderwall_free_user_data(CoderwallUserData *user)
   free(user->name);
   free(user->username);
   free(user->location);
+
+  for(i = 0; i < user->accounts_count; ++i)
+  {
+    coderwall_free_user_account(user->accounts[i]);
+  }
 
   for(i = 0; i < user->badges_count; ++i)
   {

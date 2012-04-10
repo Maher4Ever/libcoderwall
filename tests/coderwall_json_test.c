@@ -15,11 +15,18 @@ TEST(ExtractingUserInfoFromJson, WorksWithValidData) {
   EXPECT_STREQ("maher4ever",   user->username);
   EXPECT_STREQ("Netherlands",  user->location);
 
-  EXPECT_EQ   (0,  user->endorsements); /* :( */
+  EXPECT_EQ(0,  user->endorsements); /* :( */
 
-  EXPECT_EQ   (2,  user->badges_count);
+  EXPECT_EQ(5,  user->badges_count);
 
   int i = 0;
+
+  EXPECT_EQ(1,  user->accounts_count);
+
+  EXPECT_STREQ("Maher4Ever", user->accounts[i]->username);
+  EXPECT_STREQ("github", user->accounts[i]->type);
+
+  i = 0; /* Reset iterator */
 
   EXPECT_STREQ("Charity", user->badges[i]->name);
   EXPECT_STREQ(
@@ -43,9 +50,10 @@ TEST(ExtractingUserInfoFromJson, WorksWithValidData) {
       user->badges[i]->image_url
   );
 
+  /* If two badges are ok, the rest should be :) */
+
   coderwall_free_user_data(user);
 }
-
 
 TEST(ExtractingUserInfoFromJson, WorksWithInvalidData) {
   CoderwallUserData *user = coderwall_new_user_data();
