@@ -9,11 +9,21 @@
  */
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdarg.h>
 
 #include "coderwall_utils.h"
 
-void coderwall_error(const char* error)
+void
+coderwall_error(const char* error, ...)
 {
-  fprintf(stderr, "Coderwall error: %s\n", error);
+  va_list vars;
+  char* format;
+
+  sprintf(format, "Coderwall error: %s\n", error);
+
+  va_start(vars, error);
+  vfprintf(stderr, format, vars);
+  va_end(vars);
+
   exit(EXIT_FAILURE);
 }

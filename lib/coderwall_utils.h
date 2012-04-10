@@ -29,7 +29,8 @@ extern "C" {
 #define TO_STRING_(x) #x
 #define TO_STRING(x) TO_STRING_(x)
 
-void coderwall_error(const char* error);
+void
+coderwall_error(const char* error, ...);
 
 #ifdef __cplusplus
 }
