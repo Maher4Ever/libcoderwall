@@ -3,6 +3,7 @@ cmake_minimum_required (VERSION 2.6)
 set (CODERWALL_SRCS
   coderwall.c
   coderwall_utils.c
+  coderwall_memory.c
   coderwall_http.c
   coderwall_json.c
 )
