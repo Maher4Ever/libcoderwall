@@ -18,23 +18,25 @@ char* coderwall_tests_fixture(const char *filename)
     exit(EXIT_FAILURE);
   }
 
-  fseek(f , 0 , SEEK_END);
-  long int file_size = ftell(f);
+  fseek(f, 0, SEEK_END);
+  long int data_size = ftell(f) - 1;
   rewind (f);
 
-  char *data = (char *)malloc(sizeof(char) * file_size);
+  char *data = (char *)malloc(sizeof(char) * data_size);
 
   if ( data == NULL ) {
     fprintf(stderr, "Fixture error: couldn't allocate memory for fixture file '%s'.\n", file_path);
     exit(EXIT_FAILURE);
   }
 
-  size_t bytes_read = fread(data, 1, file_size, f);
+  size_t bytes_read = fread(data, 1, data_size, f);
 
-  if ( bytes_read != file_size ) {
+  if ( bytes_read != data_size ) {
     fprintf(stderr, "Fixture error: something went wrong while reading the fixture file '%s'.\n", file_path);
     exit(EXIT_FAILURE);
   }
+
+  data[data_size] = '\0'; /* End the data-string */
 
   free(file_path);
   fclose(f);
