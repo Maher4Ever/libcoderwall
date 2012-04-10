@@ -12,8 +12,11 @@
 
 #define BADGES_PER_LINE 4
 
-void print_user_data(CoderwallUserData *user)
+static void
+print_user_data(CoderwallUserData *user)
 {
+  unsigned int i;
+
   printf("----------------------------------------------------\n"
          "Results for user: %s\n"
          "----------------------------------------------------\n"
@@ -21,12 +24,18 @@ void print_user_data(CoderwallUserData *user)
          "Name: %s\n"
          "Location: %s\n"
          "Endorsements: %d\n"
-         "\n"
+         "Registered accounts (%d):"
+
+         , user->username, user->name, user->location, user->endorsements, (unsigned int)user->accounts_count);
+
+  for(i = 0; i < user->accounts_count; ++i) {
+      printf(" %s,", user->accounts[i]->type);
+  }
+
+  printf("\b\n"
          "Badges (%d):"
 
-         , user->username, user->name, user->location, user->endorsements, (unsigned int)user->badges_count);
-
-  unsigned int i;
+         , (unsigned int)user->badges_count);
 
   for(i = 0; i < user->badges_count; ++i)
   {
