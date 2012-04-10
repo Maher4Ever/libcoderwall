@@ -18,13 +18,9 @@
 static void
 print_error_and_exit(char *format, va_list format_args)
 {
-  char *format_with_banner;
-
-  strcpy(format_with_banner, "Memory error: Couldn't allocate memory for ");
-  strcat(format_with_banner, format);
-  strcat(format_with_banner, ".\n");
-
-  vfprintf(stderr, format_with_banner, format_args);
+  fprintf(stderr, "Memory error: ");
+  vfprintf(stderr, format, format_args);
+  fprintf(stderr, ".\n");
 
   exit(EXIT_FAILURE);
 }
